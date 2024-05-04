@@ -45,6 +45,26 @@ public class Dictionary {
         return words.contains(word.toUpperCase());
     }
 
+    public HashSet<String> getOneDifferenceWords(String wordName) {
+        HashSet<String> validWords = new HashSet<>();
+        char[] wordChars = wordName.toCharArray();
+        
+        for (int i = 0; i < wordChars.length; i++) {
+            char originalChar = wordChars[i];
+            for (char c = 'A'; c <= 'Z'; c++) {
+                if (c != originalChar) {
+                    wordChars[i] = c;
+                    String newWord = new String(wordChars);
+                    if (isValidWord(newWord)) {
+                        validWords.add(newWord);
+                    }
+                }
+            }
+            wordChars[i] = originalChar;
+        }
+        return validWords;
+    }
+
     public HashSet<String> findOneDifferenceWords(String wordName) {
         HashSet<String> oneDifferenceWords = new HashSet<>();
         for (String word : this.words) {
