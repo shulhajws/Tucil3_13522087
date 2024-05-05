@@ -63,25 +63,4 @@ public class Node {
             System.out.println(child.getWordName());
         }
     }
-
-    public static void main(String[] args) {
-        Node root = new Node("root");
-        Node child1 = new Node("child1");
-        Node child2 = new Node("child2");
-        Node grandChild = new Node("grandChild");
-
-        root.addChild(child1);
-        root.addChild(child2);
-        child1.addChild(grandChild);
-
-        for (Node child : root.children){
-            System.out.println(child.getWordName());
-        }
-
-        // List<String> path = grandChild.backtrack();
-        // System.out.println("Path from root to grandChild:");
-        // for (String word : path) {
-        //     System.out.println(word);
-        // }
-    }
 }

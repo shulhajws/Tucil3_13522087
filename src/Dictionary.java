@@ -8,11 +8,9 @@ import java.util.HashSet;
 
 public class Dictionary {
     private HashSet<String> words;
-    private HashMap<Integer, HashSet<String>> wordLengthMap;
 
     public Dictionary(int n) {
         words = new HashSet<>();
-        wordLengthMap = new HashMap<>();
         loadWords(n);
     }
 
@@ -35,7 +33,6 @@ public class Dictionary {
             reader.close();
 
             // Preprocess the dictionary to group words by their length
-            wordLengthMap.put(n, new HashSet<>(words));
         } catch (IOException e) {
             System.err.println("Error loading dictionary: " + e.getMessage());
         }
@@ -90,10 +87,4 @@ public class Dictionary {
         return diffCount;
     }
 
-    public static void main(String[] args) {
-        // Example usage
-        Dictionary dictionary = new Dictionary(3);
-        System.out.println("Is 'asd' a valid word? " + dictionary.isValidWord("BAT"));
-        System.out.println("Is 'bad' a valid word? " + dictionary.isValidWord("bad"));
-    }
 }
