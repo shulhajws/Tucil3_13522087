@@ -47,8 +47,11 @@ public class WordLadder {
                 case 3:
                     searchBy = new GreedyBestFirst(start, end);
                     break;
+                case 4:
+                    searchBy = new SpeedyHeuristic(start, end);
+                    break;
                 default:
-                    System.out.println("Invalid algorithm choice.");
+                    System.err.println("Invalid algorithm choice.");
                     return;
             }
 

@@ -47,7 +47,6 @@ public abstract class Algorithm {
             }
 
         }
-        ArrayList<String> path = endNode.backtrack();
-        return path;
+        return endNode.backtrack();
     }
 }
