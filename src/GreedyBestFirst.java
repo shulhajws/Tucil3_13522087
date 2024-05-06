@@ -19,11 +19,9 @@ public class GreedyBestFirst extends Algorithm {
     }
 
     @Override
-    public ArrayList<String> findPath(Dictionary dict){
+    public ArrayList<String> findPath(Dictionary dict, HashSet<String> visitedNode){
         Node root = new Node(this.getStart());
         root.setFScore(0);
-        HashSet<String> visitedNode = new HashSet<>();
-        ArrayList<Node> toVisitNode = new ArrayList<Node>();
         Node currentNode = root;
 
         Node endNode = null;
@@ -33,15 +31,17 @@ public class GreedyBestFirst extends Algorithm {
             } else {
                 visitedNode.add(currentNode.getWordName());
                 findAndAddChildren(currentNode, dict);
+                int minFScore = 999;
+                Node minNode = currentNode;
                 for (Node child: currentNode.getChildren()){
                     if (!visitedNode.contains(child.getWordName())){
-                        toVisitNode.add(child);
+                        if (child.getFScore() < minFScore){
+                            minFScore = child.getFScore();
+                            minNode = child;
+                        }
                     }
                 }
-
-                toVisitNode.sort(Comparator.comparingInt(Node::getFScore));
-                currentNode = toVisitNode.remove(0);
-                toVisitNode.clear();
+                currentNode = minNode;
             }
         }
         return endNode.backtrack();

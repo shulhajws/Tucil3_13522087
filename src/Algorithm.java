@@ -1,6 +1,7 @@
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.HashSet;
+import java.util.PriorityQueue;
 
 public abstract class Algorithm {
     private String start;
@@ -22,11 +23,10 @@ public abstract class Algorithm {
     // this method add child to the current node. child is a word, which differs only by one letter away
     public abstract void findAndAddChildren(Node node, Dictionary dict);
 
-    public ArrayList<String> findPath(Dictionary dict){
+    public ArrayList<String> findPath(Dictionary dict, HashSet<String> visitedNode){
         Node root = new Node(this.start);
         root.setFScore(0);
-        HashSet<String> visitedNode = new HashSet<>();
-        ArrayList<Node> toVisitNode = new ArrayList<Node>();
+        PriorityQueue<Node> toVisitNode = new PriorityQueue<>(new Node.NodeComparator());;
         Node currentNode = root;
 
         Node endNode = null;
@@ -41,11 +41,8 @@ public abstract class Algorithm {
                         toVisitNode.add(child);
                     }
                 }
-
-                toVisitNode.sort(Comparator.comparingInt(Node::getFScore));
-                currentNode = toVisitNode.remove(0);
+                currentNode = toVisitNode.poll();
             }
-
         }
         return endNode.backtrack();
     }

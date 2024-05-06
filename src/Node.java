@@ -1,5 +1,6 @@
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 
 public class Node {
@@ -17,6 +18,14 @@ public class Node {
     public void addChild(Node child) {
         child.setParent(this);
         children.add(child);
+    }
+
+    public static class NodeComparator implements Comparator<Node> {
+        @Override
+        public int compare(Node node1, Node node2) {
+            // Compare nodes based on their fScore
+            return Integer.compare(node1.getFScore(), node2.getFScore());
+        }
     }
 
     public ArrayList<String> backtrack() {
@@ -50,17 +59,8 @@ public class Node {
         this.fScore = fScore;
     }
 
-    public void addFScore(int addfScore) {
-        this.fScore += addfScore;
-    }
-
     public List<Node> getChildren() {
         return children;
     }
 
-    public void printChildren(){
-        for (Node child : this.children){
-            System.out.println(child.getWordName());
-        }
-    }
 }
