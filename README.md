@@ -20,6 +20,10 @@ Word ladder (juga dikenal sebagai Doublets, word-links, change-the-word puzzles,
 - Atur kelas utama ke `GUI.java`.
 - Build dan run proyek dari dalam IDE Anda.
 
+Ketika Anda membuka folder pada IDE (misal IntelliJ) dan mencoba untuk memuat akan muncul pop-up run configuration, set VM Option ke alamat lib dari JavaFX Anda
+![image](https://github.com/shulhajws/Tucil3_13522087/assets/80399465/e510472c-6e47-4cee-b9bf-69600049275e)
+
+
 ### Cara Menjalankan dan Menggunakan Program CLI
 1. **Clone repository** ini ``$ git clone  https://github.com/shulhajws/Tucil3_13522087.git``
 2. Masuk ke directory `src` dengan `cd src` pada terminal
