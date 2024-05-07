@@ -1,10 +1,13 @@
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.stage.Stage;
 
-import java.awt.event.ActionEvent;
-import java.util.ArrayList;
+import java.io.IOException;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Objects;
@@ -13,7 +16,8 @@ public class GUIInputController {
     @FXML
     private ImageView titleImageView;
     Image titleImage = new Image(Objects.requireNonNull(getClass().getResourceAsStream("assets/wordLadderTitlle.png")));
-    public void displayTitleImage(){
+
+    public void displayTitleImage() {
         titleImageView.setImage(titleImage);
     }
 
@@ -32,22 +36,22 @@ public class GUIInputController {
 
     public void showAlgorithmChoice(javafx.event.ActionEvent actionEvent) {
         String choice;
-        if(Astar.isSelected()){
+        if (Astar.isSelected()) {
             choice = "A*";
-        } else if(UCS.isSelected()){
+        } else if (UCS.isSelected()) {
             choice = "UCS";
-        } else if(GreedyBFS.isSelected()){
+        } else if (GreedyBFS.isSelected()) {
             choice = "Greedy Best First Search";
-        } else if(SpeedyHeuristic.isSelected()){
+        } else if (SpeedyHeuristic.isSelected()) {
             choice = "SpeedyHeuristic";
         } else {
             choice = "";
         }
-        buttonOutputMessage.setText("Run the word ladder with " + choice );
+        buttonOutputMessage.setText("Run the word ladder with " + choice);
     }
 
 
-    public void handleRunButton(javafx.event.ActionEvent actionEvent) {
+    public void handleRunButton(javafx.event.ActionEvent actionEvent) throws IOException {
         // Retrieve input values
         String start = startWord.getText();
         String end = endWord.getText();
@@ -71,33 +75,34 @@ public class GUIInputController {
         // Execute algorithm
         Dictionary dictionary = new Dictionary(start.length());
         HashSet<String> visitedNode = new HashSet<>();
+        long startTime = System.currentTimeMillis();
         List<String> path = searchBy.findPath(dictionary, visitedNode);
+        int steps = path.size()-1;
+        long endTime = System.currentTimeMillis();
 
-        // Display results
-        if (path != null && !path.isEmpty()) {
-            StringBuilder result = new StringBuilder();
-            result.append("Path found: ");
-            for (String word : path) {
-                result.append(word).append(" ");
-            }
-            result.append("Total steps: ").append(path.size() - 1);
-            buttonOutputMessage.setText(result.toString());
+        if (path == null || steps == 0) {
+            buttonOutputMessage.setText("No path found.");
         } else {
-            buttonOutputMessage.setText("No path found between the given words.");
+            // Load output scene
+            try {
+                FXMLLoader loader = new FXMLLoader(getClass().getResource("GUIOutput.fxml"));
+                Parent root = loader.load();
+
+                GUIOutputController outputController = loader.getController();
+
+                StringBuilder result = new StringBuilder();
+                for (String word : path) {
+                    result.append(word).append("\n");
+                }
+                // Display output scene with results outside the loop
+                outputController.initialize(result.toString(), (endTime - startTime), visitedNode.size(), steps);
+
+                Stage stage = new Stage();
+                stage.setScene(new Scene(root));
+                stage.show();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
         }
     }
-
-
-//    // This method will be called when the "Go!" button is pressed
-//    @FXML
-//    private void handleGoButton() {
-//        String start = startWord.getText();
-//        String end = endWord.getText();
-//        RadioButton selectedAlgorithm = (RadioButton) algorithmGroup.getSelectedToggle();
-//
-//        // Add code here to process the input data and start the search
-//        System.out.println("Start Word: " + start);
-//        System.out.println("End Word: " + end);
-//        System.out.println("Selected Algorithm: " + selectedAlgorithm.getText());
-//    }
 }
