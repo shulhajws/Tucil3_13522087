@@ -53,8 +53,8 @@ public class GUIInputController {
 
     public void handleRunButton(javafx.event.ActionEvent actionEvent) throws IOException {
         // Retrieve input values
-        String start = startWord.getText();
-        String end = endWord.getText();
+        String start = startWord.getText().toUpperCase();
+        String end = endWord.getText().toUpperCase();
 
         // Determine selected algorithm
         Algorithm searchBy = null;
