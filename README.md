@@ -20,6 +20,12 @@ Word ladder (juga dikenal sebagai Doublets, word-links, change-the-word puzzles,
 - Atur kelas utama ke `GUI.java`.
 - Bangun dan jalankan proyek dari dalam IDE Anda.
 
+### Cara Menjalankan dan Menggunakan Program CLI
+1. **Clone repository** ini ``$ git clone  https://github.com/shulhajws/Tucil3_13522087.git``
+2. Masuk ke directory `src` dengan `cd src` pada terminal
+3. Compile program dengan `javac WordLadder.java`
+4. Jalankna program dengan `java WordLadder.java`
+
 ### Pembuat Program
 | NIM       | Nama   | Kelas |
 |-----------|--------|-------|
