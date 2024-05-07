@@ -16,7 +16,6 @@ public class Dictionary {
 
     // Load Dictionary of Length n
     private void loadWords(int n) {
-        // Adjusted to specify a path from the project root
         String folderPath = "src" + File.separator + "dictionary";
         String fileName = n + "-letter-words.txt";
         String filePath = folderPath + File.separator + fileName;
@@ -24,15 +23,29 @@ public class Dictionary {
 
         try {
             BufferedReader reader = new BufferedReader(new FileReader(filePath));
-            String word;
-            while ((word = reader.readLine()) != null) {
-                if (word.length() == n) {
-                    words.add(word.toUpperCase());
-                }
-            }
+            loadWordsFromReader(reader, n);
             reader.close();
         } catch (IOException e) {
-            System.err.println("Error loading dictionary: " + e.getMessage());
+            // Try loading from another path
+            folderPath = "dictionary";
+            filePath = folderPath + File.separator + fileName;
+            System.out.println("File Path: " + filePath); // Print file path for debugging
+            try {
+                BufferedReader reader = new BufferedReader(new FileReader(filePath));
+                loadWordsFromReader(reader, n);
+                reader.close();
+            } catch (IOException ex) {
+                System.err.println("Error loading dictionary: " + ex.getMessage());
+            }
+        }
+    }
+
+    private void loadWordsFromReader(BufferedReader reader, int n) throws IOException {
+        String word;
+        while ((word = reader.readLine()) != null) {
+            if (word.length() == n) {
+                words.add(word.toUpperCase());
+            }
         }
     }
 
